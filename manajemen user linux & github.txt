@@ -1,0 +1,91 @@
+
+
+	   Manajemen User Linux
+
+	>. Buat User Baru Linux
+	  # sudo adduser ramadhani
+
+	>. Hapus User Linux
+	  # sudo deluser ramadhani
+
+	>. user modification agar bisa update/install 
+			debian 	  
+	  # usermod -aG sudo ramadhani
+ 			redhat
+	  # usermod -aG wheel ramadhani
+            atau edit sudoers
+	  # sudo nano /etc/sudoers 
+	     tambahkan user di user privilages spesification
+	     ramadhani All=(All) All
+
+	>. Membuat Grup sysadmin
+	  # sudo groupadd sysadmin
+
+	>. Menambahkan user ex: almahira
+	  # usermod -aG sysadmin almahira
+
+	>. Melihat user Grup sysadmin
+	  # grep 'sysadmin' /etc/gruop
+	     bisa juga dengan install apt members 
+	  # members -a sysadmnin
+
+        >. Menghapus user dari Group sysadmin
+	  # sudo gpasswd -d almahira sysadmin
+
+ 
+	 Mengunakan File sudo untuk memberikan hak istimewa tertentu
+	
+        >. ex. disini kita kan membuat file konfigurasi di sudoers.d/networking
+  	  # sudo nano -f /etc/sudoers.d/networking  
+
+	>. Isi file dengan 
+	  # Cmnd_Alias     CAPTURE = /usr/sbin/tcdump
+	    Cmnd_Alias     SERVERS = /usr/sbin apache2ctl, /usr/bin/htpasswd
+            Cmnd_Alias     NETALL = CAPTURE, SERVERS
+            %sysadmin ALL=NETALL
+
+	>. Tambahkan user yang diberikan hak akses 
+	   # sudo adduser almahira sysadmin
+
+
+
+	Manajemen Git
+
+	>. Install git Debian/Redhat
+	   # sudo dnf/apt-get install git
+
+	>. Git authentication
+	   Account -> setting -> Developer setting -> token -> Generate tokens -> generate new token -> checklist all -> copy key-tokens
+
+	>. Git understanding authentication install gh
+	   type -p curl >/dev/null || (sudo apt update && sudo apt install curl -y)
+	   curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+	   && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+	   && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+	   && sudo apt update \
+	   && sudo apt install gh -y
+
+	   gh auth login 
+	   Github.com
+ 	   HTTPS
+ 	   Yes
+           auth Github CLI
+
+	>. Create github repository
+	   or create a new repository on the command line
+	   echo "# github" >> README.md
+	   git init
+ 	   git add README.md
+	   git commit -m "first commit"
+	   git branch -M main
+	   git remote add origin https://github.com/frontzone19/github.git
+	   git push -u origin main
+
+	>. buat repo agar terhubung dengan pc 
+	   git config --global user.email "frontzone19@mail.com"
+	   git config --global user.name "frontzone19"
+	   git config  --global init.defaultBranch main
+	  
+
+	>. git error failed to push some refs
+	   # git pull --rebase origin main 
